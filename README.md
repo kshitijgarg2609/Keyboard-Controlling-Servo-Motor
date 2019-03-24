@@ -9,7 +9,7 @@ Development :- Java, Java Swing, Arduino programming and java serial programming
 
 Software Requirements :- Java Development Kit
                          ArduinoIDE
-                         jSerialComm.jar (http://fazecast.github.io/jSerialComm/) link to download jar
+                         jSerialComm.jar (http://fazecast.github.io/jSerialComm/)
 
 Hardware Requirements :- Arduino Uno (any other board can be used)
                          Servo Motor (180 degree rotation)
@@ -30,4 +30,16 @@ Procedure :-
 
 Observation :- Window frame will pop out and rx led on arduino board will start blinking. Press or Hold 'A' or 'D' to move servo arm to and fro at desired angle.
 
-Working :- 
+
+Working (Filewise explained):- 
+
+(1) Servo_Control.ino :- An Arduino Program which takes input from arduino serial monitor like "mov 150" as a command and moves the servo arm respectively.
+
+(2) SerialRW.java :- Command sender java program module which imports jSerialComm.jar and uses a timeout delay for writing to serial port plus reading from serial port. By default, it is set to 40 ms and can be modified as in case of this program it is changed to 30 ms. This module's objective is to bring sending receiving data on one function that is "String sendGet(String msg)".
+
+(3) ServoCmd.java :- This program file has one shared resource cmd where the command is updated by the keyboard strokes 'A' and 'D'. It prepares the command which will be read and executed to Arduino Board.
+
+(4) OperateServo.java :- It integrates above modules SerialRW and ServoCmd. It import java swing and set to action listerner that if 'D' is pressed angle should decrease and make an update on ServoCmd.cmd shared resource to prepare command and to execute and same way works for 'A' to increase angle of servo arm. There is one thread which sends commands continuously at the rate of of 30 ms. Command is keep on updating in ServoCmd.cmd and executed when 'A' or 'D' is pressed but the data is still sent to arduino when keys are not pressed, it sends invalid command when key is pressed it sends valid command. A trial was taken first for keylogger program using java Swing then it is integrated with these two modules SerialRW and ServoCmd.
+
+
+Future Aspects :- Multiple servo motors arduino program will be designed and NodeMcu will be used as it is faster than Arduino Uno, this program can work with nodemcu but pin has to be changed. There comes a PL2303 PL2303HX USB To TTL(Serial) Converter Module – 5 Pin where ESP8266 can be connected and will be communicating with NodeMcu in order to eleminate USB wire and robot will be wireless.
