@@ -26,7 +26,7 @@ Procedure :-
 (6) Navigate to jdk folder and go to directory jdk\jre\lib\ext\, copy jSerialComm.jar to import serial library.
 (7) open cmd and test this command "javap com.fazecast.jSerialComm.SerialPort", if output "class does not found" does not come that means the jSerialComm.jar has been imported.
 (8) Now compile SerialRW.java and ServoCmd.java
-(9) Compile OperateServo.java and run this file
+(9) Compile OperateServo.java and StartServo.java and run StartServo.
 
 Observation :- Window frame will pop out and rx led on arduino board will start blinking. Press or Hold 'A' or 'D' to move servo arm to and fro at desired angle.
 
@@ -40,6 +40,8 @@ Working (Filewise explained):-
 (3) ServoCmd.java :- This program file has one shared resource cmd where the command is updated by the keyboard strokes 'A' and 'D'. It prepares the command which will be read and executed to Arduino Board.
 
 (4) OperateServo.java :- It integrates above modules SerialRW and ServoCmd. It import java swing and set to action listerner that if 'D' is pressed angle should decrease and make an update on ServoCmd.cmd shared resource to prepare command and to execute and same way works for 'A' to increase angle of servo arm. There is one thread which sends commands continuously at the rate of of 30 ms. Command is keep on updating in ServoCmd.cmd and executed when 'A' or 'D' is pressed but the data is still sent to arduino when keys are not pressed, it sends invalid command when key is pressed it sends valid command. A trial was taken first for keylogger program using java Swing then it is integrated with these two modules SerialRW and ServoCmd.
+
+(5) StartServo.java :- To initiate program as it has main function.
 
 
 Future Aspects :- Multiple servo motors arduino program will be designed and NodeMcu will be used as it is faster than Arduino Uno, this program can work with nodemcu but pin has to be changed. There comes a PL2303 PL2303HX USB To TTL(Serial) Converter Module – 5 Pin where ESP8266 can be connected and will be communicating with NodeMcu in order to eleminate USB wire and robot will be wireless.
